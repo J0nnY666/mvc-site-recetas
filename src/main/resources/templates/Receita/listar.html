@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<title>Receitas Cadastradas</title> <br>
+	<div class="alert alert-primary alert-dismissible fade show"
+		role="alert" th:if="${mensagem != null}">
+		Receita Excluída Com Sucesso
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
+	</div>
+	<br>
+
+	<div class="box">
+		<form class="form-floating">
+			<input class="form-control" style="width: 50%; float: left; height: 50px;"
+				type="text" name="nome" id="floatingInputValue" th:value="${nome}">
+			<label for="floatingInputValue">Filtrar Receita</label>
+			<div class="row" >
+				<div class="col-md-12" style="position: absolute">
+					<button type="submit" name="submit" id="submit"
+						style="width: 10%; padding: 10px; height: 50px;">Filtrar</button>
+				</div>
+			</div>
+			
+		</form>
+		
+<br>
+<br>
+<br>
+	</div>
+	<br>
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		Nenhuma Receita Cadastrado</div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+
+					<th>Nome</th>
+					<th>Tempo de Preparo</th>
+					<th sec:authorize="hasAuthority('ADMIN')">Opções</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="receita : ${lista}">
+					<td><a th:href="@{/Receita/receita(id=${receita.id})}"   th:text="${receita.nome}"></a></td>
+					<td th:text="${receita.tempoPreparo} + ' ' + ${receita.tempo}"></td>
+					<td sec:authorize="hasAuthority('ADMIN')"> <a class="btn btn-primary btn-sm"
+						th:href="@{/Receita/editar(id=${receita.id})}">Editar</a> <a
+						class="btn btn-primary btn-danger btn-sm"
+						th:href="@{/Receita/excluir(id=${receita.id})}"
+						onclick="return confirm('Você realmente deseja excluir essa receita?')">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</html>

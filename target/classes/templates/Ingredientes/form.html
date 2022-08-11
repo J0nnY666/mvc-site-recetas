@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<title>Cadastrar Ingrediente</title> <br>
+	<div class="alert alert-primary alert-dismissible fade show "
+		role="alert" th:if="${mensagem != null}">
+		Ingrediente Salvo Com Sucesso
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<legend>
+				<b>Novo Ingrediente</b>
+			</legend>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${ingredientes}" th:action="@{/Ingredientes/editar}">
+				<input type="hidden" th:field="*{id}">
+				<div class="inputBox">
+					<input type="text" name="nome" th:field="*{nome}" required
+						class="inputUser"> <label for="nome" class="labelInput">Ingrediente</label>
+					<div class="text-danger" th:if="${#fields.hasErrors('nome')}"
+						th:errors="*{nome}"></div>
+				</div>
+				<br>
+				<br> <input type="submit" name="submit" id="submit"></input>
+			</form>
+		</div>
+
+	</div>
+</div>
+
+</html>

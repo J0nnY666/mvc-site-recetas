@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<head>
+<meta charset="UTF-8">
+
+
+</head>
+<div layout:fragment="content">
+	<body>
+
+
+		<div th:each="receita: ${receita}">
+
+
+			<div class="row">
+				<b><h1 th:text="${receita.nome}"></h1></b>
+	<br><br><br>
+				<p>
+					<b>Ingredientes:</b>
+					<p2 th:each="ingredientes : ${receita.ingredientes}"><span th:text="${ingredientes.nome} + ', '"></span></p2>
+				<p>
+					<b>Unidades de Medida:</b>
+					<p3 th:each="unidadeMedida : ${receita.unidadeMedida}"><span th:text="${unidadeMedida.nome} + ', '"></span></p3>
+				<p>
+					<b>Tempo de Preparo:</b>
+					<p4 th:text="${receita.tempoPreparo} + ' ' + ${receita.tempo}"></p4>
+				<p>
+					<b>Modo de Preparo:</b>
+					<p5 th:text="${receita.modoPreparo}" style="padding: 10px; text-align: justify; "></p5>
+			</div>
+
+
+
+
+
+		</div>
+</div>
+</table>
+
+</body>
+
+
+</div>
+</html>

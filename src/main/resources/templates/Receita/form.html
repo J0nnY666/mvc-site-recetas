@@ -1,0 +1,99 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<title>Cadastrar Receita</title> <br>
+	<div class="alert alert-primary alert-dismissible fade show "
+		role="alert" th:if="${mensagem != null}">
+		Receita Salva Com Sucesso
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<legend>
+				<b>Nova Receita</b>
+			</legend>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${receita}"
+				th:action="@{/Receita/editar}">
+				<input type="hidden" th:field="*{id}">
+				<div class="inputBox">
+					<input type="text" name="nome" th:field="*{nome}" required
+						class="inputUser"> <label for="nome" class="labelInput">Nome
+						da Receita</label>
+					<div class="text-danger" th:if="${#fields.hasErrors('nome')}"
+						th:errors="*{nome}"></div>
+				</div>
+				<br>
+
+				<div class="inputBox">
+					<input type="number" name="tempoPreparo" th:field="*{tempoPreparo}"
+						class="inputUser" required> <label for="tempoPreparo"
+						class="labelInput">Tempo de Preparo</label>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('tempoPreparo')}"
+						th:errors="*{tempoPreparo}"></div>
+
+					<div class="form-check">
+						<input class="form-check-input" type="radio" th:field="*{tempo}"
+							name="flexRadioDefault" id="horas" value="horas" required>
+						<label class="form-check-label" for="horas"> Horas </label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" th:field="*{tempo}"
+							name="flexRadioDefault" id="minutos" value="minutos" required>
+						<label class="form-check-label" for="minutos"> Minutos </label>
+					</div>
+				</div>
+				
+				<br> 
+				
+				<select class="selectpicker" multiple title="Ingredientes..."
+					data-live-search="true"  th:field="*{ingredientes}">
+					<option th:each="ingredientes: ${listaIngredientes}"
+				 th:text="${ingredientes.nome}"  th:value="${ingredientes.id}"></option>
+				</select> <a class="btn btn-primary" href="/Ingredientes/editar">+</a>
+		
+				
+				<br>
+				<br>
+				
+					<select class="selectpicker" multiple title="Unidade de Medida..."
+					data-live-search="true"  th:field="*{unidadeMedida}">
+					<option th:each="unidadeMedida: ${listaUnidadeMedida}"
+				 th:text="${unidadeMedida.nome}"  th:value="${unidadeMedida.id}"></option>
+				</select> <a class="btn btn-primary" href="/UnidadeMedida/editar">+</a>
+				
+				<br>
+				<br>
+				
+				 <a class="btn btn-primary" data-bs-toggle="collapse"
+					href="#preparo" role="button" aria-expanded="false"
+					aria-controls="collapseExample"> Modo de Preparo</a> <br>
+				<div class="box" id="boxPreparo">
+					<div class="collapse" id="preparo">
+						<br>
+						<div class="mb-3">
+							<textarea class="form-control" id="exampleFormControlTextarea1"
+								rows="3" th:field="*{modoPreparo}" required></textarea>
+						</div>
+
+					</div>
+				</div>
+				<br> <input type="submit" name="submit" id="submit"></input>
+			</form>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+</html>

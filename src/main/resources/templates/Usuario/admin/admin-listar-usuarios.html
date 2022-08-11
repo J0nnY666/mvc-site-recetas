@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Lista Usuários</title>
+<div layout:fragment="content">
+</head>
+<br>
+<div class="alert alert-primary alert-dismissible fade show"
+	th:if="${mensagem}">
+	<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+	<span th:text="${mensagem}"></span>
+</div>
+<br>
+<body>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>E-mail</th>
+				<th>Privilégios</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${usuarios.empty}">
+				<td colspan="2">Sem Usuários</td>
+			</tr>
+			<tr th:each="usuario : ${usuarios}">
+				<td><span th:text="${usuario.nome}">Nome</span></td>
+				<td><span th:text="${usuario.login}">E-mail</span></td>
+				<td><th:block th:each="role: ${usuario.role}">
+					<span th:text="${role.role}">Role</span><br/>
+					</th:block>
+				<td><a class="btn btn-primary btn-danger btn-sm"
+					th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
+					th:data-confirm-delete="|Você gostaria de apagar ${usuario.nome}?|"
+					onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
+						Apagar </a> <a class="btn btn-primary btn-sm"
+					th:href="@{/usuario/editar/{id}(id=${usuario.id})}"> Editar</a></td>
+
+				<td><a class="btn btn-primary btn-sm"
+					th:href="@{/usuario/editarRole/{id}(id=${usuario.id})}">Definir Privilégios</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a class="btn btn-primary" href="/usuario/novo">Novo Usuário</a>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Alterar Privilégios</title>
+<div layout:fragment="content">
+</head>
+<br>
+<div class="alert alert-primary alert-dismissible fade show"
+	th:if="${mensagem}">
+	<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+	<span th:text="${mensagem}"></span>
+</div>
+<br>
+<body>
+
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h2>Alterar Privilégios</h2>
+					<form action="#"
+					th:action="@{/usuario/editarRole/{id}(id=${usuario.id})}"
+					th:object="${usuario}" method="post">
+
+
+
+						<div class="row mb-3">
+							<label class="col-sm-1 col-form-label">Nome:</label>
+							<div class="col-sm-5">
+								<input class="form-control" type="text" th:field="*{nome}" disabled>
+							</div>
+							<div class="col-sm-5">
+								<span class="mensagem" th:if="${#fields.hasErrors('nome')}"
+									th:errors="*{nome}"></span>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-1 col-form-label">E-mail:</label>
+							<div class="col-sm-5">
+								<input class="form-control" type="text" th:field="*{login}" disabled>
+							</div>
+							<div class="col-sm-5">
+								<span class="mensagem" th:if="${#fields.hasErrors('login')}"
+									th:errors="*{email}"></span>
+							</div>
+						</div>
+						<div class="row mb-3">
+						<label class="col-sm-1 col-form-label">Privilégios:</label>
+						<div class="col-sm-2">
+							<th:block th:each="role : ${listaRole}">								
+								<div th:if="${#lists.contains(usuario.role, role)}" class="form-check">
+										<input class="form-check-input" type="checkbox" name="pps"
+										th:value="${role.id}" checked/> 
+									<label class="form-check-label" th:text="${role.role}"></label>
+								</div>
+								<div th:unless="${#lists.contains(usuario.role, role)}" class="form-check">
+										<input class="form-check-input" type="checkbox" name="pps"
+										th:value="${role.id}"/> 
+									<label class="form-check-label" th:text="${role.role}"></label>
+								</div>
+							</th:block>	
+						</div>						
+					</div>														
+						<input class="btn btn-primary" type="submit" value="Alterar" />
+					</form>
+
+				</div>
+			</div>
+		</div>
+</body>
+</html>

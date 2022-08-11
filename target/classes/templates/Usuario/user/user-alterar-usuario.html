@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Alterar Usuário</title>
+</head>
+<body>
+	<div layout:fragment="content">
+
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h2>Alterar usuário</h2>
+					<div class="alert alert-success alert-dismissible fade show"
+						th:if="${mensagem}">
+						<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						<span th:text="${mensagem}"></span>
+					</div>
+					<form th:action="@{/usuario/editar/{id}(id=${usuario.id})}" th:object="${usuario}" method="post">
+
+						<div class="row mb-3">
+							<label class="col-sm-1 col-form-label">Nome:</label>
+							<div class="col-sm-5">
+								<input class="form-control" type="text" th:field="*{nome}">
+							</div>
+							<div class="col-sm-5">
+								<span class="mensagem" th:if="${#fields.hasErrors('nome')}"
+									th:errors="*{nome}"></span>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-1 col-form-label">E-mail:</label>
+							<div class="col-sm-5">
+								<input class="form-control" type="text" th:field="*{email}">
+							</div>
+							<div class="col-sm-5">
+								<span class="mensagem" th:if="${#fields.hasErrors('email')}"
+									th:errors="*{email}"></span>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-1 col-form-label">Senha:</label>
+							<div class="col-sm-2">
+								<input class="form-control" type="text" th:field="*{senha}">
+							</div>
+							<div class="col-sm-5">
+								<span class="mensagem" th:if="${#fields.hasErrors('senha')}"
+									th:errors="*{senha}"></span>
+							</div>
+						</div>
+						<input class="btn btn-primary" type="submit" value="Alterar" />
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
